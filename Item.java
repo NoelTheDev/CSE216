@@ -40,7 +40,7 @@ public class Item {
         return cost;
     }
     
-    public int getQuantify(){
+    public int getQuantity(){
         return quantity;
     }
     
