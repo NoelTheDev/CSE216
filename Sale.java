@@ -11,6 +11,7 @@ public class Sale {
     int max = 999999;
     int result = (max - min) +1;
     int id = (int)(Math.random()*result) + min;
+    float subtotal = 0;
     
     public Sale(){
     
@@ -21,6 +22,7 @@ public class Sale {
         //You can use 'contains' to check if the arraylist has a specific object in it
         
         items.add(itemIn);
+        subtotal += itemIn.getQuantity() * itemIn.getCost();
         
     }
     
@@ -38,7 +40,11 @@ public class Sale {
         return id;
     }
     
+    public float getSubTotal(){
     
+    return subtotal;
+}
     
     
 }
+
