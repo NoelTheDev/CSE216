@@ -13,7 +13,7 @@ public class Item {
     int id;
     String name = new String();
     String description = new String();
-    int quantity;
+    int quantity; //SHOULD BE how much we're buying, IS how much in inventory
     float cost;
     
     public Item(String id, String name, String description, String cost, String quantity){
