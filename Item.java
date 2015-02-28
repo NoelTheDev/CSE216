@@ -1,20 +1,30 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
  * @author Tom
  */
+
 public class Item {
-    String id = new String();
+    int id;
     String name = new String();
     String description = new String();
-    String cost = new String();
-    public Item(String id, String name, String description, String cost){
-        this.id = id;
+    int quantity;
+    float cost;
+    
+    public Item(String id, String name, String description, String cost, String quantity){
+        this.id = Integer.parseInt(id);
         this.name = name;
         this.description = description;
-        this.cost = cost;
+        this.cost = Float.parseFloat(cost);
+        this.quantity = Integer.parseInt(quantity);
     }
     
-    public String getId(){
+    public int getId(){
         return id;
     }
     
@@ -26,10 +36,15 @@ public class Item {
         return description;
     }
             
-    public String getCost(){
+    public float getCost(){
         return cost;
     }
-     public void setId(String id){
+    
+    public int getQuantify(){
+        return quantity;
+    }
+    
+     public void setId(int id){
         this.id = id;
     }
     
@@ -41,8 +56,11 @@ public class Item {
         this.description = description;
     }
             
-    public void setCost(String cost){
+    public void setCost(float cost){
         this.cost = cost;
     }
     
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
 }
