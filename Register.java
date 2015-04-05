@@ -24,8 +24,8 @@ public class Register {
     public void finishSale(){
         Receipt r = new Receipt(sale);
         sale.calculateTotal();
+        db.query("insert into SOFTWARE_invoice values (" + sale.getId() + "0,0)");
         r.printReceipt();
-        //send it to the DB!!!!!!
     }
     
     public void cancelSale(){
