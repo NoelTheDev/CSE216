@@ -1,0 +1,56 @@
+    private void updateSaleTable(){
+        for(int i=0; i<itemNum; i++){
+            saleTable.getModel().setValueAt(null,i,0);
+            saleTable.getModel().setValueAt(null,i,1);
+            saleTable.getModel().setValueAt(null,i,2);
+            saleTable.getModel().setValueAt(null,i,3);
+            saleTable.getModel().setValueAt(null,i,4);
+        }
+        Item item;
+        for(int i=0; i<itemNum; i++){
+            item = register.getSaleItem(i);
+            saleTable.getModel().setValueAt(String.valueOf(item.getId()),i,0);
+            saleTable.getModel().setValueAt(item.getName(),i,1);
+            saleTable.getModel().setValueAt(String.valueOf(item.getQuantity()),i,2);
+            saleTable.getModel().setValueAt(item.getDescription(),i,3);
+            saleTable.getModel().setValueAt(String.format("%.2f",item.getCost()),i,4);
+        }
+    }
+    
+    private void updateReturnTable(){
+        for(int i=0; i<itemNum; i++){
+            returnTable.getModel().setValueAt(null,i,0);
+            returnTable.getModel().setValueAt(null,i,1);
+            returnTable.getModel().setValueAt(null,i,2);
+            returnTable.getModel().setValueAt(null,i,3);
+            returnTable.getModel().setValueAt(null,i,4);
+        }
+        Item item;
+        for(int i=0; i<itemNum; i++){
+            item = register.getSaleItem(i);
+            returnTable.getModel().setValueAt(String.valueOf(item.getId()),i,0);
+            returnTable.getModel().setValueAt(item.getName(),i,1);
+            returnTable.getModel().setValueAt(String.valueOf(item.getQuantity()),i,2);
+            returnTable.getModel().setValueAt(item.getDescription(),i,3);
+            returnTable.getModel().setValueAt(String.format("%.2f",item.getCost()),i,4);
+        }
+    }
+    
+    private void updateRentalTable(){
+        for(int i=0; i<itemNum; i++){
+            rentalTable.getModel().setValueAt(null,i,0);
+            rentalTable.getModel().setValueAt(null,i,1);
+            rentalTable.getModel().setValueAt(null,i,2);
+            rentalTable.getModel().setValueAt(null,i,3);
+            rentalTable.getModel().setValueAt(null,i,4);
+        }
+        Item item;
+        for(int i=0; i<itemNum; i++){
+            item = register.getSaleItem(i);
+            rentalTable.getModel().setValueAt(String.valueOf(item.getId()),i,0);
+            rentalTable.getModel().setValueAt(item.getName(),i,1);
+            rentalTable.getModel().setValueAt(String.valueOf(item.getQuantity()),i,2);
+            rentalTable.getModel().setValueAt(item.getDescription(),i,3);
+            rentalTable.getModel().setValueAt(String.format("%.2f",item.getCost()),i,4);
+        }
+    }
