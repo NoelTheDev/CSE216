@@ -11,7 +11,7 @@ public class Register {
     public Register() { }
     
     public void addItemToSale(String id, String quant){
-        db.query("select * from inventory where SSID = " + id + "");
+        db.query("select * from SOFTWARE_product where SSID = " + id + "");
         
         Item item = new Item(db.getString("ssid"),db.getString("ITEMNAME"),db.getString("description"),db.getString("cost"),quant);
         sale.add(item);
@@ -33,7 +33,7 @@ public class Register {
     }
     
     public void addItemToReturn(String id, String quant){
-        db.query("select * from inventory where SSID = " + id + "");
+        db.query("select * from SOFTWARE_product where SSID = " + id + "");
         
         Item item = new Item(db.getString("ssid"),db.getString("ITEMNAME"),db.getString("description"),db.getString("cost"),quant);
         ret.add(item);
