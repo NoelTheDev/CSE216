@@ -1,3 +1,4 @@
+import java.awt.Desktop;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,67 +9,41 @@
  *
  * @author Tom
  */
-import java.util.*;
+import java.io.*;
 
-public class Return {
-    
-    ArrayList items = new ArrayList();
-    int min = 100000;
-    int max = 999999;
-    int result = (max - min) +1;
-    int id = (int)(Math.random()*result) + min;
-    float subtotal = 0;
-    float total = 0;
-    float tax = 0;
-    TaxCalculator tCalc = new TaxCalculator();
-    
-    public Return(){
-    
-}
-    
-    
-    public void add(Item itemIn){
-        //You can use 'contains' to check if the arraylist has a specific object in it
-        
-        items.add(itemIn);
-        subtotal += itemIn.getCost() * itemIn.getQuantity();
-        
+public class Receipt {
+    Sale sale = null;
+    public Receipt(Sale sale){
+        this.sale = sale;
     }
     
-    public void remove(Item itemOut){
-        items.remove(itemOut);
-        subtotal -= itemOut.getCost() * itemOut.getQuantity();
-    }
-    
-    public Item get(int m){
-        return (Item)items.get(m);
-        
-    }
-    public int getSize(){
-        return items.size();
-        
-    }
-    
-    public int getId(){        
-        return id;
-    }
-    
-    public float getSubTotal(){
-    return subtotal;
-}
-    
-    public float getTax(){
-        
-        return tax;
-    }
-    public void calculateTotal(){
-        tax = tCalc.taxCalc(subtotal);
-        total = subtotal + tax;
-        
-    }
-    
-    public float getTotal(){
-        
-        return total;
+    public boolean printReceipt(){
+        try {
+            FileWriter out = new FileWriter(Integer.toString(sale.getId()) + ".txt");
+            out.write("Stuff Hut\n\n");
+            out.write("--------------------------------------------- \n\n");
+            for (int i = 0; i < sale.getSize(); i++){
+                Item line = sale.get(i);
+                //put in quantity
+                //NEWLINES DONT WORK YET
+                //cashier name, sale id, smiley faces, all to come
+                out.write(line.getName() + " x" + line.getQuantity() + "\t \t" + line.getCost() + "\n");
+            //nicer formatting to come
+           }
+            out.write("\n\n\t\t Subtotal: $" + sale.getSubTotal() + "\n");
+            out.write("\t\t Tax: +$" + sale.getTax() + "\n");
+            out.write("\t\t____________" + "\n");
+            out.write("\t\t Total: $" + sale.getTotal() + "\n");
+            out.write("\n\n--------------------------------------------- \n\n");
+           out.write("THANKS FOR SHOPPING AT STUFF HUT\nTHE HUT FOR ALL YOUR STUFF \n\nSale #: " + sale.getId());
+           out.close();
+           File pop = new File (Integer.toString(sale.getId()) + ".txt");
+           Desktop.getDesktop().edit(pop);
+        }
+        catch (IOException e){
+            System.err.println("Can't write to file HAHAHAHA");
+            return false;
+        }
+        return true;
     }
 }
