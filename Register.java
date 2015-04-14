@@ -33,7 +33,7 @@ public class Register {
                int newquant = rental.get(i).quantity + Integer.parseInt(quant);
                Item newItem = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("cost"),String.valueOf(newquant));
                 
-                //newItem.setQuantity(newquant);
+              
                 rental.add(newItem);
                 rental.remove(rental.get(i));
                 match = true;
@@ -68,7 +68,7 @@ public class Register {
                int newquant = sale.get(i).quantity + Integer.parseInt(quant);
                Item newItem = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("cost"),String.valueOf(newquant));
                 
-                //newItem.setQuantity(newquant);
+                
                 sale.add(newItem);
                 sale.remove(sale.get(i));
                 match = true;
@@ -172,7 +172,7 @@ public class Register {
                int newquant = ret.get(i).quantity + Integer.parseInt(quant);
                Item newItem = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("cost"),String.valueOf(newquant));
                 
-                //newItem.setQuantity(newquant);
+               
                 ret.add(newItem);
                 ret.remove(ret.get(i));
                 match = true;
@@ -193,21 +193,14 @@ public class Register {
     public void finishReturn(){
         ReceiptReturn r = new ReceiptReturn(ret);
         ret.calculateTotal();
-        
-        
-        try{
-        for(int i = 0; i < sale.getSize(); i++){
-            db.query("select * from software_product where UPC = " + sale.get(i).id);
-            int quant = Integer.parseInt(db.getString("Stock")) + sale.get(i).quantity;
-            db.query("update software_product set stock = " + quant +  " where UPC = " + sale.get(i).id);
-        }
-        
-        db.query("insert into SOFTWARE_invoice values (" + sale.getId() + "0,0)");}
-        catch(Exception e){
-            javax.swing.JOptionPane.showMessageDialog(null, "Error updating inventory");
+
+         for (int i = 0; i < ret.getSize(); i++){
+            System.out.println("update software_product set stock = stock + " + ret.get(i).quantity + " where UPC = '" + ret.get(i).id + "'");
+            db.update("update software_product set stock = stock + " + ret.get(i).quantity + " where UPC = " + ret.get(i).id + "");
+           
         }
         r.printReceipt();
-        //send it to the DB!!!!!!
+       
         
          ret = new Return();
     }
