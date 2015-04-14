@@ -1,4 +1,5 @@
 
+
 /**
  *
  * @author Tom
@@ -20,17 +21,63 @@ public class Register {
         if(!db.query("select * from SOFTWARE_product where UPC = " + id + ""))
             javax.swing.JOptionPane.showMessageDialog(null, "Invalid UPC");
         
+        boolean match = false;
+        
         Item item = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("daily_rate"),quant);
+        
+        
+        for (int i = 0; i < rental.getSize(); i++){
+            
+           if((rental.get(i).id == item.getId()) && (rental.get(i).cost == item.getCost())){
+               
+               int newquant = rental.get(i).quantity + Integer.parseInt(quant);
+               Item newItem = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("cost"),String.valueOf(newquant));
+                
+                //newItem.setQuantity(newquant);
+                rental.add(newItem);
+                rental.remove(rental.get(i));
+                match = true;
+           }
+           
+        }
+        if(match == false){
         rental.add(item);
+        }
+        
+        
+        
+        
+        
+        
     }
      
     public void addItemToSale(String id, String quant){
         System.out.println("select * from SOFTWARE_product where UPC = '" + id + "'");
             if(!db.query("select * from SOFTWARE_product where UPC = " + id + ""))
                 javax.swing.JOptionPane.showMessageDialog(null, "Invalid UPC");
+            
+            boolean match = false;
+ 
+        Item item = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("cost"),quant); 
         
-        Item item = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("cost"),quant);
+        
+        for (int i = 0; i < sale.getSize(); i++){
+            
+           if((sale.get(i).id == item.getId()) && (sale.get(i).cost == item.getCost())){
+               
+               int newquant = sale.get(i).quantity + Integer.parseInt(quant);
+               Item newItem = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("cost"),String.valueOf(newquant));
+                
+                //newItem.setQuantity(newquant);
+                sale.add(newItem);
+                sale.remove(sale.get(i));
+                match = true;
+           }
+           
+        }
+        if(match == false){
         sale.add(item);
+        }
     }
     
     public void removeLastItemSale(){
@@ -112,9 +159,31 @@ public class Register {
         if (!db.query("select * from SOFTWARE_product where UPC = " + id + ""))
             javax.swing.JOptionPane.showMessageDialog(null, "Invalid UPC");
         
+        
+        boolean match = false;
+        
         Item item = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("cost"),quant);
         System.out.println(item.getName() + "   " + item.getCost());
-        ret.add(item);
+        
+        for (int i = 0; i < ret.getSize(); i++){
+            
+           if((ret.get(i).id == item.getId()) && (ret.get(i).cost == item.getCost())){
+               
+               int newquant = ret.get(i).quantity + Integer.parseInt(quant);
+               Item newItem = new Item(db.getString("upc"),db.getString("ITEM_NAME"),db.getString("description"),db.getString("cost"),String.valueOf(newquant));
+                
+                //newItem.setQuantity(newquant);
+                ret.add(newItem);
+                ret.remove(ret.get(i));
+                match = true;
+           }
+           
+        }
+        if(match == false){
+         ret.add(item);
+        }
+         
+       
     }
     
     public void removeLastItemReturn(){
