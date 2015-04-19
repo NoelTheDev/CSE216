@@ -16,9 +16,11 @@ public class Receipt {
         this.ccard = ccard;
         this.brand = brand;
     }
-    public Receipt(Rental rental, float tendered){
+    public Receipt(Rental rental, float tendered, String ccard, String brand){
         this.rental = rental;
         this.tendered = tendered;
+        this.ccard = ccard;
+        this.brand = brand;
     }
     public Receipt(Return ret){
         this.ret = ret;
@@ -27,6 +29,13 @@ public class Receipt {
         try {
             FileWriter out = new FileWriter(Integer.toString(rental.getId()) + "receipt.txt");
             out.write("Stuff Hut\r\n Rental #: " + rental.getId() + "\r\n");
+            if (!ccard.equals("")){
+                for(int i = 0; i < ccard.length()-4; i++){
+                    ccard = ccard.substring(0,i)+'x'+ccard.substring(i+1);
+                }
+                out.write("Card type: " + brand + "\r\n");
+                out.write("Acct #: " + ccard + "\r\n");
+            }
             out.write("--------------------------------------------- \r\n\r\n");
             for (int i = 0; i < rental.getSize(); i++){
                 Item line = rental.get(i);
@@ -57,7 +66,6 @@ public class Receipt {
             FileWriter out = new FileWriter(Integer.toString(sale.getId()) + ".txt");
             out.write("Stuff Hut\r\nSale #: " + sale.getId() + "\r\n");
             if (!ccard.equals("")){
-                System.out.println("KILL YOUR PARENTS");
                 for(int i = 0; i < ccard.length()-4; i++){
                     ccard = ccard.substring(0,i)+'x'+ccard.substring(i+1);
                 }
