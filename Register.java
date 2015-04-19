@@ -43,26 +43,6 @@ public class Register {
         }
 
     }
-    
-    
-    
-    
-    public void editItemRental(String id, String quant, int i) {
-        
-        System.out.println("select * from SOFTWARE_product where UPC = '" + id + "'");
-        if (!db.query("select * from SOFTWARE_product where UPC = " + id + "")) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Invalid UPC");
-        }
-        
-        
-                int newquant =  Integer.parseInt(quant);
-                Item newItem = new Item(db.getString("upc"), db.getString("ITEM_NAME"), db.getString("description"), db.getString("cost"), String.valueOf(newquant));
-
-                rental.add(newItem);
-                rental.remove(rental.get(i));
-        
-        
-    }
 
     public void addItemToSale(String id, String quant) {
         System.out.println("select * from SOFTWARE_product where UPC = '" + id + "'");
@@ -92,38 +72,17 @@ public class Register {
         }
     }
 
-    
-    
-    public void editItemSale(String id, String quant, int i) {
-        System.out.println("select * from SOFTWARE_product where UPC = '" + id + "'");
-        if (!db.query("select * from SOFTWARE_product where UPC = " + id + "")) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Invalid UPC");
-        }
-
-        
-                int newquant =  Integer.parseInt(quant);
-                Item newItem = new Item(db.getString("upc"), db.getString("ITEM_NAME"), db.getString("description"), db.getString("cost"), String.valueOf(newquant));
-
-                sale.add(newItem);
-                sale.remove(sale.get(i));
-        
-        
-    }
-    
-    
-    public void removeItemSale(int removeIt) {
-        //sale.remove(sale.get(sale.getSize() - 1));
-        sale.remove(sale.get(removeIt));
+    public void removeLastItemSale() {
+        sale.remove(sale.get(sale.getSize() - 1));
     }
 
     //removes last item in the rental grid
-    public void removeItemRental(int removeIt) {
-        rental.remove(rental.get(removeIt));
-        //rental.remove(rental.get(rental.getSize() - 1));
+    public void removeLastItemRental() {
+        rental.remove(rental.get(rental.getSize() - 1));
     }
 
     public void finishRental() {
-        Receipt r = new Receipt(rental,0);
+        Receipt r = new Receipt(rental, 0);
         System.out.println("1");
         rental.calculateTotal();
         System.out.println("2");
@@ -140,32 +99,86 @@ public class Register {
 
     }
 
-    private int isParsable(String input) {
+    private int isParsableFloat(String input) {
         int parsable = 1;
         float payment = -1;
-        
+
         try {
             payment = Float.parseFloat(input);
-            
-            if (payment < (sale.getSubTotal() + sale.getTax())){
-            parsable = -2;
-        }
+
+            if (payment < (sale.getSubTotal() + sale.getTax())) {
+                parsable = -2;
+            }
         } catch (NumberFormatException e) {
             parsable = 0;
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             parsable = -1;
         }
-        
-        
-        
         return parsable;
     }
 
+    private int isParsableLong(String input) {
+        int parsable = 1;
+        if (input == null) {
+            return -1;
+        }
+
+        try {
+            Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            parsable = 0;
+        } catch (NullPointerException e) {
+            System.out.println("kill your parents");
+            parsable = -1;
+        }
+        return parsable;
+    }
+
+    private boolean validateNumber(String pnr) {
+    // this only works if you are certain all input will be at 
+        //pnr = pnr.substring(extraChars, 10 + extraChars);
+        int sum = 0;
+        for (int i = 0; i < pnr.length() - 1; i++) {
+            char tmp = pnr.charAt(i);
+            System.out.print(tmp + " ");
+            int num = tmp - '0';
+            int product;
+            if (i % 2 != 0) {
+                product = num * 1;
+            } else {
+                product = num * 2;
+            }
+            if (product > 9) {
+                product -= 9;
+            }
+            sum += product;
+            System.out.println(product + " ");
+        }
+        System.out.println(sum + " " + (pnr.charAt(pnr.length() - 1) - '0') + " " + (sum % 10));
+        return (10 - (sum % 10) == (pnr.charAt(pnr.length() - 1) - '0'));
+    }
+
+    private String findBrand(String ccard) {
+        if (ccard.charAt(0) == '4') {
+            return "Visa";
+        }
+        if (ccard.charAt(0) == '3' && (ccard.charAt(1) == '4' && ccard.charAt(1) == '7')) {
+            return "American Express";
+        }
+        if (ccard.charAt(0) == '5' && (ccard.charAt(1) == '1' && ccard.charAt(1) == '2' && ccard.charAt(1) == '3' && ccard.charAt(1) == '4' && ccard.charAt(1) == '5')) {
+            return "Master Card";
+        } else {
+            return "Unknown";
+        }
+    }
+
     public void finishSale() {
-        
+
         sale.calculateTotal();
         String strInput = "";
         float tendered = 0;
+        String ccard = "";
+        String brand = "LOL";
         //cash or credit?
         Object[] options = {"Cash", "Credit", "Cancel"};
         int n = javax.swing.JOptionPane.showOptionDialog(null, "Subtotal: $" + String.format("%.02f", sale.getSubTotal())
@@ -177,20 +190,39 @@ public class Register {
             case 0: {
                 System.out.println("CA$H MONEY");
                 int input;
-                while ((input = isParsable(strInput = ((String) javax.swing.JOptionPane.showInputDialog(null, "Your total: $" + String.format("%.02f", sale.getSubTotal() + sale.getTax()), ""))))<1 ) {
-                    if (input == -1) /* they hit cancel */ 
+                while ((input = isParsableFloat(strInput = ((String) javax.swing.JOptionPane.showInputDialog(null, "Your total: $" + String.format("%.02f", sale.getSubTotal() + sale.getTax()), "")))) < 1) {
+                    if (input == -1) /* they hit cancel */ {
                         return;
+                    }
                     System.out.println("WRONG");
-                    if (input == 0)
+                    if (input == 0) {
                         javax.swing.JOptionPane.showMessageDialog(null, "Invalid cash input.");
-                    if (input == -2)
-                        javax.swing.JOptionPane.showMessageDialog(null,"That's not enough, einstein");
+                    }
+                    if (input == -2) {
+                        javax.swing.JOptionPane.showMessageDialog(null, "That's not enough, einstein");
+                    }
                 }
+                tendered = Float.parseFloat(strInput);
                 break;
             } /* cash */
 
             case 1: {
                 int input;
+                while ((input = isParsableLong(strInput = ((String) javax.swing.JOptionPane.showInputDialog(null, "Please enter your credit card number", "")))) < 1 || (!validateNumber(strInput))) {
+                    if (input == -1) /* cancel*/ {
+                        return;
+                    }
+                    if (input == 0) {
+                        javax.swing.JOptionPane.showMessageDialog(null, "Invalid credit card number");
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(null, "Invalid credit card number");
+                    }
+                }
+                tendered = sale.getTotal();
+
+                brand = findBrand(strInput);
+                ccard = strInput;
+
                 System.out.println("CREDITS");
                 break;
             } /* credit */
@@ -207,9 +239,8 @@ public class Register {
             db.update("update software_product set stock = stock - " + sale.get(i).quantity + " where UPC = " + sale.get(i).id + "");
 
         }
-        
-        tendered = Float.parseFloat(strInput);
-        Receipt r = new Receipt(sale,tendered, 0 , "");
+
+        Receipt r = new Receipt(sale, tendered, ccard, brand);
         r.printReceipt();
 
         sale = new Sale();
@@ -238,6 +269,34 @@ public class Register {
 
     public float getReturnSubtotal() {
         return ret.getSubTotal();
+    }
+
+    public void editItemRental(String id, String quant, int i) {
+
+        System.out.println("select * from SOFTWARE_product where UPC = '" + id + "'");
+        if (!db.query("select * from SOFTWARE_product where UPC = " + id + "")) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid UPC");
+        }
+
+        int newquant = Integer.parseInt(quant);
+        Item newItem = new Item(db.getString("upc"), db.getString("ITEM_NAME"), db.getString("description"), db.getString("cost"), String.valueOf(newquant));
+
+        rental.add(newItem);
+        rental.remove(rental.get(i));
+
+    }
+
+    public void editItemSale(String id, String quant, int i) {
+        System.out.println("select * from SOFTWARE_product where UPC = '" + id + "'");
+        if (!db.query("select * from SOFTWARE_product where UPC = " + id + "")) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid UPC");
+        }
+
+        int newquant = Integer.parseInt(quant);
+        Item newItem = new Item(db.getString("upc"), db.getString("ITEM_NAME"), db.getString("description"), db.getString("cost"), String.valueOf(newquant));
+
+        sale.add(newItem);
+        sale.remove(sale.get(i));
 
     }
 
@@ -277,11 +336,33 @@ public class Register {
         }
 
     }
-    
-    
-    
-    
-     public void editItemReturn(String id, String quant, int i) {
+
+    public void removeItemSale(int removeIt) {
+        //sale.remove(sale.get(sale.getSize() - 1));
+        sale.remove(sale.get(removeIt));
+    }
+
+    //removes last item in the rental grid
+    public void removeItemRental(int removeIt) {
+        rental.remove(rental.get(removeIt));
+        //rental.remove(rental.get(rental.getSize() - 1));
+    }
+
+    public void finishReturn() {
+        ReceiptReturn r = new ReceiptReturn(ret);
+        ret.calculateTotal();
+
+        for (int i = 0; i < ret.getSize(); i++) {
+            System.out.println("update software_product set stock = stock + " + ret.get(i).quantity + " where UPC = '" + ret.get(i).id + "'");
+            db.update("update software_product set stock = stock + " + ret.get(i).quantity + " where UPC = " + ret.get(i).id + "");
+
+        }
+        r.printReceipt();
+
+        ret = new Return();
+    }
+
+    public void editItemReturn(String id, String quant, int i) {
 
         System.out.println("select * from SOFTWARE_product where UPC = '" + id + "'");
         if (!db.query("select * from SOFTWARE_product where UPC = " + id + "")) {
@@ -299,20 +380,6 @@ public class Register {
     public void removeItemReturn(int removeIt) {
         ret.remove(ret.get(removeIt));
         //ret.remove(ret.get(ret.getSize() - 1));
-    }
-
-    public void finishReturn() {
-        ReceiptReturn r = new ReceiptReturn(ret);
-        ret.calculateTotal();
-
-        for (int i = 0; i < ret.getSize(); i++) {
-            System.out.println("update software_product set stock = stock + " + ret.get(i).quantity + " where UPC = '" + ret.get(i).id + "'");
-            db.update("update software_product set stock = stock + " + ret.get(i).quantity + " where UPC = " + ret.get(i).id + "");
-
-        }
-        r.printReceipt();
-
-        ret = new Return();
     }
 
     public void cancelReturn() {
