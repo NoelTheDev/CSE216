@@ -82,17 +82,37 @@ public class Register {
     }
 
     public void finishRental() {
-        Receipt r = new Receipt(rental, 0);
         System.out.println("1");
         rental.calculateTotal();
+        String strInput = "";
+        float tendered = 0;
+        String ccard = "";
+        String brand = "LOL";
         System.out.println("2");
+        int input;
+        while ((input = isParsableLong(strInput = ((String) javax.swing.JOptionPane.showInputDialog(null, "Please enter your credit card number", "")))) < 1 || (!validateNumber(strInput))) {
+            if (input == -1) /* cancel*/ {
+                return;
+            }
+            if (input == 0) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Invalid credit card number");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "Invalid credit card number");
+            }
+        }
+        tendered = sale.getTotal();
 
+        brand = findBrand(strInput);
+        ccard = strInput;
+
+        System.out.println("CREDITS");
         for (int i = 0; i < rental.getSize(); i++) {
             System.out.println("update software_product set stock = stock - " + rental.get(i).quantity + " where UPC = '" + rental.get(i).id + "'");
             db.update("update software_product set stock = stock - " + rental.get(i).quantity + " where UPC = " + rental.get(i).id + "");
 
         }
         System.out.println("3");
+        Receipt r = new Receipt(sale, tendered, ccard, brand);
         r.printRentalReceipt();
 
         rental = new Rental();
@@ -135,7 +155,7 @@ public class Register {
     }
 
     private boolean validateNumber(String pnr) {
-    // this only works if you are certain all input will be at 
+        // this only works if you are certain all input will be at 
         //pnr = pnr.substring(extraChars, 10 + extraChars);
         int sum = 0;
         for (int i = 0; i < pnr.length() - 1; i++) {
