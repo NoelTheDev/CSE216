@@ -1,0 +1,1371 @@
+import java.lang.Math;
+//import static Login.result;
+//import static Login.con;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author andrew
+ */
+public class RegisterGUI extends javax.swing.JFrame {
+    static int Rent_id = (int)(Math.random() * 100000);
+    DefaultTableModel model;
+    
+    static String getRentID(){
+        return ("" + Rent_id +"");
+    }
+    String RentCost = "0";
+    private ArrayList<String> rentalTrans = new ArrayList<String>();
+    private ArrayList<String> saleTrans = new ArrayList<String>();
+    
+    public RegisterGUI() {
+        initComponents();
+        setResizable(false);
+        SubtotalSale.setText("" + subtotal + "");
+        String username = "amm216";
+        String pass = "Archie1994";
+
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@edgar1.cse.lehigh.edu:1521:cse241", "" + username + "",
+                    "" + pass + "");
+            s = con.createStatement();
+
+        } catch (java.lang.ClassNotFoundException e2) {
+            System.out.println("Missing necessary driver..");
+        } catch (SQLException e) {
+            System.out.println("Invalid username and password..");
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+        
+        
+        
+       
+        updateSaleTable();
+        updateReturnTable();
+        updateRentalTable();
+        
+    }
+        
+ 
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jPanel5 = new javax.swing.JPanel();
+        clearLastSale4 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        rentalTable = new javax.swing.JTable();
+        SubtotalRental = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        NewRental = new javax.swing.JButton();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        ProductCodeRental = new javax.swing.JTextField();
+        rentalQuantity = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        rentalDeleteItem = new javax.swing.JButton();
+        rentalEditButton = new javax.swing.JButton();
+        rentalCancel = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        returnID = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        RentalStatus = new javax.swing.JLabel();
+        finishRentalButton = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        clearLastSale3 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        returnTable = new javax.swing.JTable();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        ProductCodeReturn = new javax.swing.JTextField();
+        returnQuantity = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        returnEditButton = new javax.swing.JButton();
+        cancelReturn = new javax.swing.JButton();
+        returnDeleteItem = new javax.swing.JButton();
+        finishReturnButton = new javax.swing.JButton();
+        SubtotalReturn = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        receiptID = new javax.swing.JTextField();
+        RentalStatus1 = new javax.swing.JLabel();
+        clearLastSale = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        saleTable = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        ProductCodeSale = new javax.swing.JTextField();
+        saleQuantity = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        saleEditButton = new javax.swing.JButton();
+        saleDeleteItem = new javax.swing.JButton();
+        cancelSale = new javax.swing.JButton();
+        finishSaleButton = new javax.swing.JButton();
+        SubtotalSale = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setText("Invoice No.:");
+
+        jTextField1.setEditable(false);
+        jTextField1.setText("1337");
+
+        jLabel4.setText("Cashier:");
+
+        jTextField4.setEditable(false);
+        jTextField4.setText("Rhett Reisman");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(85, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 153));
+
+        jTextArea1.setBackground(new java.awt.Color(255, 255, 153));
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Welcome to stuff hut and stuff");
+        jScrollPane2.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(161, 161, 161)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(237, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(60, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Welcome ", jPanel4);
+
+        clearLastSale4.setBackground(new java.awt.Color(204, 255, 255));
+
+        rentalTable.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        rentalTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Product Code:", "Name", "Quantity", "Description", "Daily Rate"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        rentalTable.setGridColor(new java.awt.Color(0, 0, 0));
+        rentalTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rentalTableMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(rentalTable);
+
+        SubtotalRental.setEditable(false);
+        SubtotalRental.setBackground(new java.awt.Color(237, 237, 237));
+        SubtotalRental.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+
+        jLabel21.setText("Net Daily Rate:");
+
+        NewRental.setText("Finish Rental");
+        NewRental.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddRental(evt);
+            }
+        });
+
+        jPanel11.setBackground(new java.awt.Color(0, 255, 255));
+        jPanel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel18.setText("Scan or Enter Product Code:");
+
+        ProductCodeRental.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                productRentalSearch(evt);
+            }
+        });
+
+        rentalQuantity.setText("1");
+        rentalQuantity.setToolTipText("");
+        rentalQuantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rentalQuantityKeyPressed(evt);
+            }
+        });
+
+        jLabel20.setText("Quantity");
+
+        rentalDeleteItem.setText("Delete Item");
+        rentalDeleteItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rentalDeleteItemActionPerformed(evt);
+            }
+        });
+
+        rentalEditButton.setText("Edit");
+        rentalEditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rentalEditButtonActionPerformed(evt);
+            }
+        });
+
+        rentalCancel.setText("Cancel Rental");
+        rentalCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rentalCancelActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ProductCodeRental))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rentalQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel20)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rentalDeleteItem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rentalEditButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rentalCancel)
+                .addGap(22, 22, 22))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductCodeRental, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rentalQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rentalDeleteItem)
+                    .addComponent(rentalEditButton)
+                    .addComponent(rentalCancel))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jLabel8.setText("Rental Transaction Number:");
+
+        jButton2.setText("Return Rental");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnIDInput(evt);
+            }
+        });
+
+        RentalStatus.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        RentalStatus.setText("Rental Status: ");
+
+        finishRentalButton.setText("New Rental");
+        finishRentalButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                finishRentalButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout clearLastSale4Layout = new javax.swing.GroupLayout(clearLastSale4);
+        clearLastSale4.setLayout(clearLastSale4Layout);
+        clearLastSale4Layout.setHorizontalGroup(
+            clearLastSale4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(clearLastSale4Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(clearLastSale4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(clearLastSale4Layout.createSequentialGroup()
+                        .addGroup(clearLastSale4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(clearLastSale4Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(clearLastSale4Layout.createSequentialGroup()
+                                .addGap(104, 104, 104)
+                                .addComponent(finishRentalButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(clearLastSale4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RentalStatus)
+                            .addGroup(clearLastSale4Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(18, 18, 18)
+                                .addComponent(SubtotalRental, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(NewRental))
+                            .addGroup(clearLastSale4Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(returnID, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2))))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(181, Short.MAX_VALUE))
+        );
+        clearLastSale4Layout.setVerticalGroup(
+            clearLastSale4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(clearLastSale4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(clearLastSale4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(clearLastSale4Layout.createSequentialGroup()
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(finishRentalButton)
+                        .addGap(0, 26, Short.MAX_VALUE))
+                    .addGroup(clearLastSale4Layout.createSequentialGroup()
+                        .addGroup(clearLastSale4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SubtotalRental, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21)
+                            .addComponent(NewRental))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RentalStatus)
+                        .addGap(15, 15, 15)
+                        .addGroup(clearLastSale4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(returnID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(clearLastSale4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(clearLastSale4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Rental", jPanel5);
+
+        clearLastSale3.setBackground(new java.awt.Color(255, 204, 204));
+
+        returnTable.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        returnTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Product Code:", "Name", "Quantity", "Description", "Price"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        returnTable.setGridColor(new java.awt.Color(0, 0, 0));
+        returnTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                returnTableMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(returnTable);
+
+        jPanel10.setBackground(new java.awt.Color(255, 153, 153));
+        jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel14.setText("Scan or Enter Product Code:");
+
+        ProductCodeReturn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ProductCodeReturnKeyPressed(evt);
+            }
+        });
+
+        returnQuantity.setText("1");
+        returnQuantity.setToolTipText("");
+        returnQuantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                returnQuantityKeyPressed(evt);
+            }
+        });
+
+        jLabel16.setText("Quantity");
+
+        returnEditButton.setText("Edit");
+        returnEditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnEditButtonActionPerformed(evt);
+            }
+        });
+
+        cancelReturn.setText("Cancel Return");
+        cancelReturn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelReturnButtonPressed(evt);
+            }
+        });
+
+        returnDeleteItem.setText("Delete Item");
+        returnDeleteItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnDeleteItemActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ProductCodeReturn))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(returnQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel16)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(returnDeleteItem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(returnEditButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelReturn)))
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductCodeReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(returnQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(returnEditButton)
+                    .addComponent(cancelReturn)
+                    .addComponent(returnDeleteItem))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        finishReturnButton.setText("Finish Return");
+        finishReturnButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                finishReturnButtonMouseClicked(evt);
+            }
+        });
+
+        SubtotalReturn.setEditable(false);
+        SubtotalReturn.setBackground(new java.awt.Color(238, 238, 238));
+        SubtotalReturn.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+
+        jLabel17.setText("Subtotal:");
+
+        receiptID.setText("ReceiptID");
+        receiptID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                receiptIDKeyPressed(evt);
+            }
+        });
+
+        RentalStatus1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        RentalStatus1.setText("Return Status: ");
+
+        javax.swing.GroupLayout clearLastSale3Layout = new javax.swing.GroupLayout(clearLastSale3);
+        clearLastSale3.setLayout(clearLastSale3Layout);
+        clearLastSale3Layout.setHorizontalGroup(
+            clearLastSale3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(clearLastSale3Layout.createSequentialGroup()
+                .addGroup(clearLastSale3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(clearLastSale3Layout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(clearLastSale3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(clearLastSale3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RentalStatus1))
+                            .addGroup(clearLastSale3Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(SubtotalReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(clearLastSale3Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(receiptID, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(clearLastSale3Layout.createSequentialGroup()
+                        .addGap(629, 629, 629)
+                        .addComponent(finishReturnButton))
+                    .addGroup(clearLastSale3Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(262, Short.MAX_VALUE))
+        );
+        clearLastSale3Layout.setVerticalGroup(
+            clearLastSale3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(clearLastSale3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(clearLastSale3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(clearLastSale3Layout.createSequentialGroup()
+                        .addGroup(clearLastSale3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SubtotalReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(finishReturnButton)
+                            .addComponent(jLabel17))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(RentalStatus1)
+                        .addGap(12, 12, 12)
+                        .addComponent(receiptID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1018, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(clearLastSale3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 416, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(clearLastSale3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Return", jPanel6);
+
+        clearLastSale.setBackground(new java.awt.Color(204, 204, 255));
+
+        saleTable.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        saleTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Product Code:", "Name", "Quantity", "Description", "Price"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        saleTable.setGridColor(new java.awt.Color(0, 0, 0));
+        saleTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saleTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(saleTable);
+
+        jPanel7.setBackground(new java.awt.Color(153, 153, 255));
+        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel5.setText("Scan or Enter Product Code:");
+
+        ProductCodeSale.setText("ProductCode");
+        ProductCodeSale.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ProductCodeSaleKeyPressed(evt);
+            }
+        });
+
+        saleQuantity.setText("1");
+        saleQuantity.setToolTipText("");
+        saleQuantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                saleQuantityKeyPressed(evt);
+            }
+        });
+
+        jLabel7.setText("Quantity");
+
+        saleEditButton.setText("Edit");
+        saleEditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saleEditButtonActionPerformed(evt);
+            }
+        });
+
+        saleDeleteItem.setText("Delete Item");
+        saleDeleteItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saleDeleteItemMouseClicked(evt);
+            }
+        });
+
+        cancelSale.setText("Cancel Sale");
+        cancelSale.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelSaleButtonPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ProductCodeSale))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(saleQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel7)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(saleDeleteItem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(saleEditButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cancelSale)
+                .addGap(0, 8, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductCodeSale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saleQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saleEditButton)
+                    .addComponent(saleDeleteItem)
+                    .addComponent(cancelSale))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        finishSaleButton.setText("Finish Sale");
+        finishSaleButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                finishSaleButtonMouseClicked(evt);
+            }
+        });
+
+        SubtotalSale.setEditable(false);
+        SubtotalSale.setBackground(new java.awt.Color(237, 237, 237));
+        SubtotalSale.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+
+        jLabel3.setText("Subtotal:");
+
+        javax.swing.GroupLayout clearLastSaleLayout = new javax.swing.GroupLayout(clearLastSale);
+        clearLastSale.setLayout(clearLastSaleLayout);
+        clearLastSaleLayout.setHorizontalGroup(
+            clearLastSaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(clearLastSaleLayout.createSequentialGroup()
+                .addGroup(clearLastSaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(clearLastSaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(clearLastSaleLayout.createSequentialGroup()
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(28, 28, 28)
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(SubtotalSale, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(clearLastSaleLayout.createSequentialGroup()
+                            .addGap(584, 584, 584)
+                            .addComponent(finishSaleButton))))
+                .addContainerGap(323, Short.MAX_VALUE))
+        );
+        clearLastSaleLayout.setVerticalGroup(
+            clearLastSaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(clearLastSaleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(clearLastSaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(clearLastSaleLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(clearLastSaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SubtotalSale, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(finishSaleButton))))
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Sale", clearLastSale);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addGap(18, 18, 18))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        jMenu4.setText("jMenu4");
+        jMenuBar1.add(jMenu4);
+
+        setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>                        
+
+  
+    
+    
+    private void ProductCodeSaleKeyPressed(java.awt.event.KeyEvent evt) {                                           
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+
+            String PInput = ProductCodeSale.getText();
+            String quantity = saleQuantity.getText();
+            register.addItemToSale(PInput, quantity);
+            
+            saleTrans.add ("insert into SOFTWARE_sale_ITEMS values ('" + PInput + "', '" + sale.getId() +"', '" + quantity + "')");
+            
+            itemNumSale = register.sale.getSize();
+            updateSaleTable();
+        }
+    }                                          
+
+    private void saleQuantityKeyPressed(java.awt.event.KeyEvent evt) {                                        
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            String PInput = ProductCodeSale.getText();
+            String quantity = saleQuantity.getText();
+            register.addItemToSale(PInput, quantity);
+            
+            saleTrans.add ("insert into SOFTWARE_sale_ITEMS values ('" + PInput + "', '" + sale.getId() +"', '" + quantity + "')");
+            
+            itemNumSale = register.sale.getSize();
+            updateSaleTable();
+        }
+    }                                       
+
+    private void finishSaleButtonMouseClicked(java.awt.event.MouseEvent evt) {                                              
+        DBConnect db = new DBConnect();
+        for (int i = 0; i < saleTrans.size(); i++){
+            System.out.println(saleTrans.get(i));
+        db.update(saleTrans.get(i));
+        }
+        register.finishSale();
+        itemNumSale = 0;
+        updateSaleTable();
+    }                                             
+
+    private void saleDeleteItemMouseClicked(java.awt.event.MouseEvent evt) {                                            
+      
+        register.removeItemSale(saleTable.getSelectedRow());
+        itemNumSale--;
+        updateSaleTable();
+    }                                           
+
+    private void cancelSaleButtonPressed(java.awt.event.MouseEvent evt) {                                         
+        register.cancelSale();
+        itemNumSale = 0;
+        updateSaleTable();
+    }                                        
+
+    private void returnQuantityKeyPressed(java.awt.event.KeyEvent evt) {                                          
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            String PInput = ProductCodeReturn.getText();
+            String quantity = returnQuantity.getText();
+            register.addItemToReturn(PInput, quantity);
+            itemNumReturn++;
+            updateReturnTable();
+        }
+    }                                         
+
+    private void finishReturnButtonMouseClicked(java.awt.event.MouseEvent evt) {                                                
+        register.finishReturn();      
+        updateReturnTable();
+    }                                               
+
+    private void cancelReturnButtonPressed(java.awt.event.MouseEvent evt) {                                           
+        register.cancelReturn();
+        itemNumReturn = 0;
+        updateReturnTable();
+    }                                          
+
+    private void finishRentalButtonMouseClicked(java.awt.event.MouseEvent evt) {                                                
+        register.finishRental();
+        updateRentalTable();
+    }                                               
+
+    
+    
+    
+    
+    private void AddRental(java.awt.event.ActionEvent evt) {                           
+        new RentalForm("" + Rent_id + "", RentCost, rentalTrans, register).setVisible(true);
+    }                          
+
+    
+    
+    
+    
+    
+    private void productRentalSearch(java.awt.event.KeyEvent evt) {                                     
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+             System.out.println("Enter");
+            //float subtot = 0;
+            String PInput = ProductCodeRental.getText();
+            System.out.println(PInput);
+            String quantity = rentalQuantity.getText();
+            System.out.println("q: " + quantity);
+            
+            
+            register.addItemToRental(PInput, quantity);
+            
+            
+            //add item to rental_database
+            DBConnect db = new DBConnect();
+            //db.update("insert into SOFTWARE_RENTAL_ITEMS values ('" + PInput + "', '" + Rent_id + "')");
+            System.out.println("insert into SOFTWARE_RENTAL_ITEMS values ('" + Rent_id + "', '" + PInput +"', '" + quantity + "');");
+            rentalTrans.add ("insert into SOFTWARE_RENTAL_ITEMS values ('" + PInput + "', '" + Rent_id +"', '" + quantity + "')");
+            
+            
+            itemNumRental++;
+            updateRentalTable();
+            RentCost = "" + register.getRentalSubtotal() + "";
+            //SubtotalRental.setText("" + register.getRentalSubtotal() + "");
+        }
+        
+        //System.out.println("Rental Worked!");
+    }                                    
+
+    private void rentalQuantityKeyPressed(java.awt.event.KeyEvent evt) {                                          
+        // TODO add your handling code here:
+    }                                         
+
+    private void returnIDInput(java.awt.event.ActionEvent evt) {                               
+        String status = RentalStatus.getText();
+        String id = returnID.getText();
+        DBConnect db = new DBConnect();
+        //System.out.println("select * from software_rental_form where UPC = '" + id + "'" );
+        if(
+        db.query("select * from software_rental_form where Form_ID = '" + id + "'" ))
+        {
+            RentalStatus.setText("Rental Status: VALID RENTAL");
+        }
+        else{
+            RentalStatus.setText("Rental Status: INVALID RENTAL");
+        }
+        
+    }                              
+
+    private void ProductCodeReturnKeyPressed(java.awt.event.KeyEvent evt) {                                             
+        if (evt.getKeyCode() == evt.VK_ENTER){
+            String PInput = ProductCodeReturn.getText();
+            String quantity = returnQuantity.getText();
+            register.addItemToReturn(PInput, quantity);
+
+            itemNumReturn++;
+            updateReturnTable();
+        }
+    }                                            
+
+    private void receiptIDKeyPressed(java.awt.event.KeyEvent evt) {                                     
+        if (evt.getKeyCode() == evt.VK_ENTER){
+            String status = RentalStatus1.getText();
+  
+        String id = receiptID.getText();
+        DBConnect db = new DBConnect();
+        //System.out.println("select * from software_rental_form where UPC = '" + id + "'" );
+        if(
+        db.query("select * from software_sale_items where sale_ID = '" + id + "'" ))
+        {
+            RentalStatus1.setText("Return Status: VALID");
+        }
+        else{
+            RentalStatus1.setText("Return Status: INVALID");
+        }
+        }
+        
+    }                                    
+
+    private void saleTableMouseClicked(java.awt.event.MouseEvent evt) {                                       
+       model = (DefaultTableModel)saleTable.getModel();
+        
+    }                                      
+
+    private void saleEditButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+
+        
+            String PInput = String.valueOf(model.getValueAt(saleTable.getSelectedRow(), 0));
+            String quantity = String.valueOf(model.getValueAt(saleTable.getSelectedRow(), 2));
+            register.editItemSale(PInput, quantity, saleTable.getSelectedRow());
+            
+            saleTrans.add ("insert into SOFTWARE_sale_ITEMS values ('" + PInput + "', '" + sale.getId() +"', '" + quantity + "')");
+            
+            itemNumSale = register.sale.getSize();
+            updateSaleTable();
+        
+    }                                              
+
+    private void returnEditButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        
+        
+        
+            String PInput = String.valueOf(model.getValueAt(returnTable.getSelectedRow(), 0));
+            String quantity = String.valueOf(model.getValueAt(returnTable.getSelectedRow(), 2));
+            register.editItemReturn(PInput, quantity, returnTable.getSelectedRow());
+            
+            
+            itemNumReturn = register.ret.getSize();
+            updateReturnTable();
+    }                                                
+
+    private void rentalEditButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        
+         String PInput = String.valueOf(model.getValueAt(rentalTable.getSelectedRow(), 0));
+            String quantity = String.valueOf(model.getValueAt(rentalTable.getSelectedRow(), 2));
+            register.editItemRental(PInput, quantity, rentalTable.getSelectedRow());
+            
+            
+            itemNumRental = register.rental.getSize();
+            updateRentalTable();
+            RentCost = "" + register.getRentalSubtotal() + "";
+        
+        
+    }                                                
+
+    private void returnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        
+        register.removeItemReturn(returnTable.getSelectedRow());
+        itemNumReturn--;
+        updateReturnTable();
+    }                                                
+
+    private void rentalCancelActionPerformed(java.awt.event.ActionEvent evt) {                                             
+         register.cancelRental();
+        itemNumRental = 0;
+        RentCost = "" + register.getRentalSubtotal() + "";
+        updateRentalTable();
+    }                                            
+
+    private void rentalDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+       
+        register.removeItemRental(rentalTable.getSelectedRow());
+        itemNumRental--;
+        updateRentalTable();
+    }                                                
+
+    private void returnTableMouseClicked(java.awt.event.MouseEvent evt) {                                         
+       
+        model = (DefaultTableModel)returnTable.getModel();
+    }                                        
+
+    private void rentalTableMouseClicked(java.awt.event.MouseEvent evt) {                                         
+        
+        model = (DefaultTableModel)rentalTable.getModel();
+    }                                        
+    
+   
+    
+    
+    
+    
+    
+    
+    static float subtotal = 0;
+    static Connection con = null;
+    static Statement s = null;
+    static ResultSet result;
+    Sale sale = new Sale();
+    
+    
+    
+    
+    
+    
+    
+    static int itemNumSale = 0;
+
+    static int itemNumReturn = 0;
+    static int itemNumRental = 0;
+    Return returns = new Return();
+    Register register = new Register();
+    
+    
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(RegisterGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(RegisterGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(RegisterGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(RegisterGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new RegisterGUI().setVisible(true);
+            }
+        });
+        
+    
+        
+        
+        
+        
+    }
+
+    private void updateSaleTable() {
+        for (int i = 0; saleTable.getModel().getValueAt(i,0) != null; i++) {
+            saleTable.getModel().setValueAt(null, i, 0);
+            saleTable.getModel().setValueAt(null, i, 1);
+            saleTable.getModel().setValueAt(null, i, 2);
+            saleTable.getModel().setValueAt(null, i, 3);
+            saleTable.getModel().setValueAt(null, i, 4);
+        }
+        Item item;
+        for (int i = 0; i < register.sale.getSize(); i++) {
+            item = register.getSaleItem(i);
+            saleTable.getModel().setValueAt(String.valueOf(item.getId()), i, 0);
+            saleTable.getModel().setValueAt(item.getName(), i, 1);
+            saleTable.getModel().setValueAt(String.valueOf(item.getQuantity()), i, 2);
+            saleTable.getModel().setValueAt(item.getDescription(), i, 3);
+            saleTable.getModel().setValueAt("$"+String.format("%.02f",item.getCost()), i, 4);
+        }
+        SubtotalSale.setText("$"+String.format("%.02f",register.getSaleSubtotal()));
+    }
+    
+    
+    
+     private void updateRentalTable() {
+        for (int i = 0; rentalTable.getModel().getValueAt(i,0) != null; i++) {
+            rentalTable.getModel().setValueAt(null, i, 0);
+            rentalTable.getModel().setValueAt(null, i, 1);
+            rentalTable.getModel().setValueAt(null, i, 2);
+            rentalTable.getModel().setValueAt(null, i, 3);
+            rentalTable.getModel().setValueAt(null, i, 4);
+        }
+        Item item;
+        for (int i = 0; i < register.rental.getSize(); i++) {
+            item = register.getRentalItem(i);
+            rentalTable.getModel().setValueAt(String.valueOf(item.getId()), i, 0);
+            rentalTable.getModel().setValueAt(item.getName(), i, 1);
+            rentalTable.getModel().setValueAt(String.valueOf(item.getQuantity()), i, 2);
+            rentalTable.getModel().setValueAt(item.getDescription(), i, 3);
+            rentalTable.getModel().setValueAt("$"+String.format("%.02f",item.getCost()), i, 4);
+        }
+        SubtotalRental.setText("$"+String.format("%.02f",register.getRentalSubtotal()));
+    }
+    
+    private void updateReturnTable() {
+        for (int i = 0; returnTable.getModel().getValueAt(i,0) != null; i++) {
+            returnTable.getModel().setValueAt(null, i, 0);
+            returnTable.getModel().setValueAt(null, i, 1);
+            returnTable.getModel().setValueAt(null, i, 2);
+            returnTable.getModel().setValueAt(null, i, 3);
+            returnTable.getModel().setValueAt(null, i, 4);
+        }
+        Item item;
+        for (int i = 0; i < register.ret.getSize(); i++) {
+            item = register.getReturnItem(i);
+            returnTable.getModel().setValueAt(item.getId(), i, 0);
+            returnTable.getModel().setValueAt(item.getName(), i, 1);
+            returnTable.getModel().setValueAt(item.getQuantity(), i, 2);
+            returnTable.getModel().setValueAt(item.getDescription(), i, 3);
+            returnTable.getModel().setValueAt("$"+String.format("%.02f",item.getCost()), i, 4);
+        }
+         SubtotalReturn.setText("$"+String.format("%.02f",register.getReturnSubtotal()));
+    }
+
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton NewRental;
+    private javax.swing.JTextField ProductCodeRental;
+    private javax.swing.JTextField ProductCodeReturn;
+    private javax.swing.JTextField ProductCodeSale;
+    private javax.swing.JLabel RentalStatus;
+    private javax.swing.JLabel RentalStatus1;
+    private javax.swing.JTextField SubtotalRental;
+    private javax.swing.JTextField SubtotalReturn;
+    private javax.swing.JTextField SubtotalSale;
+    private javax.swing.JButton cancelReturn;
+    private javax.swing.JButton cancelSale;
+    private javax.swing.JPanel clearLastSale;
+    private javax.swing.JPanel clearLastSale3;
+    private javax.swing.JPanel clearLastSale4;
+    private javax.swing.JButton finishRentalButton;
+    private javax.swing.JButton finishReturnButton;
+    private javax.swing.JButton finishSaleButton;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField receiptID;
+    private javax.swing.JButton rentalCancel;
+    private javax.swing.JButton rentalDeleteItem;
+    private javax.swing.JButton rentalEditButton;
+    private javax.swing.JTextField rentalQuantity;
+    private javax.swing.JTable rentalTable;
+    private javax.swing.JButton returnDeleteItem;
+    private javax.swing.JButton returnEditButton;
+    private javax.swing.JTextField returnID;
+    private javax.swing.JTextField returnQuantity;
+    private javax.swing.JTable returnTable;
+    private javax.swing.JButton saleDeleteItem;
+    private javax.swing.JButton saleEditButton;
+    private javax.swing.JTextField saleQuantity;
+    private javax.swing.JTable saleTable;
+    // End of variables declaration                   
+}
